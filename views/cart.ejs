@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+  </head>
+  <body>
+    <%- include("header") %> <%- include("nav") %>
+
+    <!-- CART PAGE -->
+    <h1 class="shopping-heading">Shopping Cart</h1>
+    <div class="cart-container">
+        <div class="cart-item">
+          <img src="product1.jpg" alt="Product 1">
+          <div>
+            <h3>Product 1</h3>
+            <p>Price: $20.00</p>
+            <p>Quantity: 2</p>
+          </div>
+          <button>Delete</button>
+        </div>
+    
+        <div class="cart-item">
+          <img src="product2.jpg" alt="Product 2">
+          <div>
+            <h3>Product 2</h3>
+            <p>Price: $15.00</p>
+            <p>Quantity: 1</p>
+          </div>
+          <button>Delete</button>
+        </div>
+    
+        <div class="cart-total">
+          <p>Total: $55.00</p>
+          <button class="shopping-button">Checkout</button>
+        </div>
+      </div>
+
+    <%- include("footer") %>
+  </body>
+</html>

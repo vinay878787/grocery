@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>User Profile</h1>
+
+  <% if (user) { %>
+    <p>Name: <%= user.name %></p>
+    <p>Username: <%= user.username %></p>
+    <!-- Add more user data as needed -->
+  <% } else { %>
+    <p>No user data available</p>
+  <% } %>
+
+    <a href="/logout"><button>logout</button></a>
+  </body>
+</html>
