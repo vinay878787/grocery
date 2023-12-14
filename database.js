@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 exports.connectMongoose = () => {
   mongoose
     .connect(
-      "mongodb+srv://test123:test@test.fhuxlc7.mongodb.net/?retryWrites=true&w=majority"
+      "mongodb+srv://vinay878787:adi2002@grocery.mwvn7ef.mongodb.net/?retryWrites=true&w=majority"
     )
     .then((e) => console.log(`connected to mongodb `))
     .catch((e) => console.log(e));

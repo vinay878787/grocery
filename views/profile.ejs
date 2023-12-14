@@ -7,16 +7,26 @@
     <link rel="stylesheet" href="../stylesheets/style.css" />
   </head>
   <body>
-    <h1>User Profile</h1>
+    
+    <%-include("header") %>
+    <%-include("nav") %>
+    
+   <div class="profile-container">
+    <h1 >User Profile</h1>
 
-  <% if (user) { %>
-    <p>Name: <%= user.name %></p>
-    <p>Username: <%= user.username %></p>
-    <!-- Add more user data as needed -->
-  <% } else { %>
-    <p>No user data available</p>
-  <% } %>
 
-    <a href="/logout"><button>logout</button></a>
+    <% if (user) { %>
+      <p>Name: <%= user.name %></p>
+      <p>Username: <%= user.username %></p>
+      <!-- Add more user data as needed -->
+    <% } else { %>
+      <p>No user data available</p>
+    <% } %>
+  
+      <a href="/logout"><button>logout</button></a>
+   </div>
+
+
+    <%-include("footer")%>
   </body>
 </html>
