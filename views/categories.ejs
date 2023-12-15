@@ -1,73 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../stylesheets/style.css" />
-  </head>
-  <body>
-    <%- include("header") %> <%- include("nav") %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="../stylesheets/style.css" />
+</head>
+<body>
+  <%- include("header") %> <%- include("nav") %>
+  
+  <!-- ABOUT PAGE -->
+  <!-- Grid Container -->
+  <div class="content-container"> <!-- Add another div with class "content-container" -->
+    <form action="/cart" method="post" class="form-categories">
 
-    
-
-
-    <!-- ABOUT PAGE -->
-       <!-- Grid Container -->
-       <h2 class="category-item">Vegetables</h2>
-  <div class="grid-container">
-    <% vegetables.forEach(product => { %>
-      <!-- Product Grid Item -->
-      <div class="grid-item">
-        <img class="vegetable-img" src="<%= product.image %>" alt="<%= product.name %>">
-        <div class="category-item"><%= product.name %></div>
-        <div class="category-price">$<%= product.price.toFixed(2) %></div>
-        <button class="product-item">Add to Cart</button>
+      <div class="category-container">
+        <h2 class="category-item">Vegetables</h2>
+        <div class="grid-container">
+          <% vegetables.forEach(product => { %>
+            <!-- Product Grid Item -->
+            <div class="grid-item">
+              <img class="vegetable-img" src="<%= product.image %>" alt="<%= product.name %>" name="productImg">
+              <div class="category-item" name="productName"><%= product.name %></div>
+              <div class="category-price" name="productPrice">$<%= product.price.toFixed(2) %></div>
+              <!-- Add data-category attribute with the category name -->
+              <button class="product-item" onclick="addToCart(this)" data-category="vegetables">Add to Cart</button>
+            </div>
+          <% }); %>
+        </div>
       </div>
-    <% }); %>
-  </div>
 
-  <h2 class="category-item">Dairy</h2>
-  <div class="grid-container">
-    <% dairy.forEach(product => { %>
-      <!-- Product Grid Item -->
-      <div class="grid-item">
-        <img class="vegetable-img" src="<%= product.image %>" alt="<%= product.name %>">
-        <div class="category-item"><%= product.name %></div>
-        <div class="category-price">$<%= product.price.toFixed(2) %></div>
-        <button class="product-item">Add to Cart</button>
+      <div class="category-container">
+        <h2 class="category-item">Dairy</h2>
+        <div class="grid-container">
+          <% dairy.forEach(product => { %>
+            <!-- Product Grid Item -->
+            <div class="grid-item">
+              <img class="vegetable-img" src="<%= product.image %>" alt="<%= product.name %>" name="productImg">
+              <div class="category-item" name="productName"><%= product.name %></div>
+              <div class="category-price"  name="productPrice">$<%= product.price.toFixed(2) %></div>
+              <!-- Add data-category attribute with the category name -->
+              <button class="product-item" onclick="addToCart(this)" data-category="dairy">Add to Cart</button>
+            </div>
+          <% }); %>
+        </div>
       </div>
-    <% }); %>
-  </div>
 
-  <h2 class="category-item">Snacks</h2>
-  <div class="grid-container">
-    <% snacks.forEach(product => { %>
-      <!-- Product Grid Item -->
-      <div class="grid-item">
-        <img class="vegetable-img" src="<%= product.image %>" alt="<%= product.name %>">
-        <div class="category-item"><%= product.name %></div>
-        <div class="category-price">$<%= product.price.toFixed(2) %></div>
-        <button class="product-item">Add to Cart</button>
-      </div>
-    <% }); %>
-  </div>
+      <!-- Repeat the structure for Snacks and Fruits -->
 
-  <h2 class="category-item">Fruits</h2>
-  <div class="grid-container">
-    <% fruits.forEach(product => { %>
-      <!-- Product Grid Item -->
-      <div class="grid-item">
-        <img class="vegetable-img"  src="<%= product.image %>" alt="<%= product.name %>">
-        <div class="category-item"><%= product.name %></div>
-        <div class="category-price">$<%= product.price.toFixed(2) %></div>
-        <button class="product-item">Add to Cart</button>
-      </div>
-    <% }); %>
-  </div>
+    </form>
+  </div> <!-- Close the "content-container" div -->
 
-    
+  <%-include("footer")%>
 
-    <%- include("footer") %>
-  </body>
+  <script>
+    function addToCart(button) {
+      const productDiv = button.closest('.grid-item');
+      const productName = productDiv.querySelector('.category-item').innerText;
+      const productImage = productDiv.querySelector('.vegetable-img').src;
+      const productPrice = productDiv.querySelector('.category-price').innerText;
+      const category = button.getAttribute('data-category'); // Get the category from data-category attribute
+
+      const data = {
+        productName: productName,
+        productImage: productImage,
+        productPrice: productPrice,
+        category: category // Include category information
+      };
+      event.preventDefault();
+
+      fetch('/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
 </html>

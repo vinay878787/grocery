@@ -14,5 +14,13 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: String,
+  cart: [
+    {
+      productName: String,
+      productImage: String,
+      productPrice: String,
+      category: String,
+    },
+  ]
 });
 exports.User = mongoose.model("User",userSchema);

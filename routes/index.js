@@ -29,16 +29,16 @@ router.get("/about",(req,res)=>{
 router.get("/categories", (req, res) => {
   // List of different products with their details and categories
   const products = [
-    { name: "Carrot", image: "../images/carrot.jpg", price: 1.5, category: "vegetable" },
-    { name: "Broccoli", image: "../images/broccoli.jpg", price: 2.0, category: "vegetable" },
-    { name: "Tomato", image: "../images/tomato.jpg", price: 1.0, category: "vegetable" },
-    { name: "Chillies", image: "../images/chillies.jpg", price: 1.0, category: "vegetable" },
-    { name: "Cucumber", image: "../images/cucumber.jpg", price: 1.0, category: "vegetable" },
-    { name: "Eggplant", image: "../images/eggplant.jpg", price: 1.0, category: "vegetable" },
-    { name: "Lettuce", image: "../images/lettuce.jpg", price: 1.0, category: "vegetable" },
-    { name: "Onion", image: "../images/onion.jpg", price: 1.0, category: "vegetable" },
-    { name: "Potato", image: "../images/potato.jpg", price: 1.0, category: "vegetable" },
-    { name: "Spinach", image: "../images/spinach.jpg", price: 1.0, category: "vegetable" },
+    { name: "Carrot", image: "images/carrot.jpg", price: 1.5, category: "vegetable" },
+    { name: "Broccoli", image: "/images/broccoli.jpg", price: 2.0, category: "vegetable" },
+    { name: "Tomato", image: "/images/tomato.jpg", price: 1.0, category: "vegetable" },
+    { name: "Chillies", image: "/images/chillies.jpg", price: 1.0, category: "vegetable" },
+    { name: "Cucumber", image: "/images/cucumber.jpg", price: 1.0, category: "vegetable" },
+    { name: "Eggplant", image: "/images/eggplant.jpg", price: 1.0, category: "vegetable" },
+    { name: "Lettuce", image: "/images/lettuce.jpg", price: 1.0, category: "vegetable" },
+    { name: "Onion", image: "/images/onion.jpg", price: 1.0, category: "vegetable" },
+    { name: "Potato", image: "/images/potato.jpg", price: 1.0, category: "vegetable" },
+    { name: "Spinach", image: "/images/spinach.jpg", price: 1.0, category: "vegetable" },
    
     { name: "Milk", image: "../images/milk.jpg", price: 2.5, category: "dairy" },
     { name: "Cheese", image: "../images/cheese.jpg", price: 2.0, category: "dairy" },
@@ -78,16 +78,55 @@ router.get("/categories", (req, res) => {
 
   res.render("categories", { vegetables: filteredVegetables, dairy: filteredDairy, snacks: filteredSnacks, fruits: filteredFruits });
 });
-
 router.get("/contact",(req,res)=>{
   res.render("contact");
 })
 // router.get("/profile",(req,res)=>{
 //   res.render("profile");
 // })
-router.get("/cart",(req,res)=>{
-  res.render("cart");
-})
+router.get('/cart', isAuthenticated, async (req, res) => {
+  try {
+    // Assuming you are using Passport.js, the authenticated user is available in req.user
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      // Handle case where user is not found
+      return res.status(404).render('error', { error: 'User not found' });
+    }
+
+    res.render('cart', { cartItems: user.cart });
+  } catch (error) {
+    console.error('Error fetching cart data:', error);
+
+    res.status(500).render('error', { error: 'Internal Server Error' });
+  }
+});
+// Your /cart route to handle adding items to the cart
+router.post('/cart', isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.user._id; // Assuming you have the user information in req.user
+
+    // Extract product details from the request body
+    console.log(req.body);
+    const { productName, productImage, productPrice, category } = req.body;
+
+    // Save the cart item to the user's document in the database
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { cart: { productName, productImage, productPrice, category } } },
+      { new: true }
+    ).exec();
+
+    // res.json({ success: true, user: updatedUser });
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 
 

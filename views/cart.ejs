@@ -12,32 +12,40 @@
     <!-- CART PAGE -->
     <h1 class="shopping-heading">Shopping Cart</h1>
     <div class="cart-container">
+      <% cartItems.forEach(item => { %>
         <div class="cart-item">
-          <img src="product1.jpg" alt="Product 1">
+          <img src="<%= item.productImage %>" alt="<%= item.productName %>">
           <div>
-            <h3>Product 1</h3>
-            <p>Price: $20.00</p>
-            <p>Quantity: 2</p>
+            <h3><%= item.productName %></h3>
+            <p>Price: $<%= parseFloat(item.productPrice.replace('$', '₹')).toFixed(2) %></p>
+            <p>Category: <%= item.category %></p>
           </div>
-          <button>Delete</button>
+          <!-- You can add a form here to handle the "Delete" action -->
+          <!-- For simplicity, I'm using a button with an onclick event -->
+          <button onclick="deleteCartItem('<%= item._id %>')">Delete</button>
         </div>
+      <% }); %>
     
-        <div class="cart-item">
-          <img src="product2.jpg" alt="Product 2">
-          <div>
-            <h3>Product 2</h3>
-            <p>Price: $15.00</p>
-            <p>Quantity: 1</p>
-          </div>
-          <button>Delete</button>
-        </div>
-    
-        <div class="cart-total">
-          <p>Total: $55.00</p>
-          <button class="shopping-button">Checkout</button>
-        </div>
+      <div class="cart-total">
+        <p onclick="calculateTotal(cartItems)">Total:   </p>
+        <button class="shopping-button">Checkout</button>
       </div>
+    </div>
+
 
     <%- include("footer") %>
+
+    <script>
+     // Function to delete a cart item (you may want to send an AJAX request to the server)
+     function deleteCartItem(itemId) {
+        console.log('Deleting item with ID:', itemId);
+        // You can add logic here to delete the item from the cart
+      }
+
+      // Function to calculate the total price
+      function calculateTotal(cartItems) {
+        return cartItems.reduce((total, item) => total + parseFloat(item.productPrice.replace('$', '')), 0).toFixed(2);
+      }
+    </script>
   </body>
 </html>

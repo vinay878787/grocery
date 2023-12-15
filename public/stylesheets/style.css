@@ -224,33 +224,54 @@ footer a {
   width: 280px;
 }
 
-/* Apply basic styles to the grid container */
-.grid-container {
+.form-categories {
+  /* background: none; */
+  box-shadow: none;
+ }
+ .content-container {
+  width: 100%; /* Adjust the width based on your preference */
+  margin: 0 auto; /* Center the container */
+  width: 100vw;
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 3 equal-width columns */
   grid-gap: 10px; /* Spacing between grid items */
 }
+.grid-container {
+  width: 70vw;
+}
 
-.vegetable-img{
-  width:50%;
-}
-.product-item{
-  color:#fff;
-  padding:15px;
-  background: rgb(17, 150, 77);
-}
-.category-item{
-  text-align: center;
-  padding:10px;
-  font-weight: 900;
-  font-size: 2rem;
-}
-/* Apply styles to grid items (placeholders for content) */
 .grid-item {
   border: 1px solid #ddd;
   padding: 20px;
   text-align: center;
+  width:30vw;
 }
+
+.vegetable-img {
+  width: 100%; 
+}
+
+.product-item {
+  color: #fff;
+  padding: 15px;
+  background: rgb(17, 150, 77);
+  
+}
+
+.category-item {
+  text-align: center;
+  padding: 10px;
+  font-weight: 900;
+  font-size: 2rem;
+  /* width: 100vw; */
+}
+
+/* Add styles for the content container */
+
+
+/* Additional styles if needed */
+
+
 .shopping-heading{
   text-align: center;
 }
