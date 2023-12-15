@@ -382,3 +382,11 @@ input {
   margin:10px;
   cursor: pointer;
 }
+.payment-container{
+  display:flex;
+  justify-content: center;
+}
+.payment-img{
+  width:30vw;
+  margin: 0 auto;
+}

@@ -176,4 +176,8 @@ router.get("/logout", (req, res) => {
   });
 });
 
+router.get("/payment",(req,res)=>{
+  res.render("payment");
+})
+
 module.exports = router;
